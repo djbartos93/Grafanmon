@@ -21,8 +21,8 @@ def influx(valuein, valueout, ifname, measurename)
 
   influxdb.write_point(name, datain)
   influxdb.write_point(name, dataout)
-  puts data1
-  puts data2
+  puts datain
+  puts dataout
 end
 
 def interfaces
@@ -38,7 +38,7 @@ end
 def measure
   loop do
     puts interfaces
-    sleep 10
+    sleep 30
   end
 end
 
