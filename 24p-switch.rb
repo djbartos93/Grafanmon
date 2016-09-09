@@ -38,7 +38,7 @@ end
 def measure
   loop do
     puts interfaces
-    sleep 30
+    sleep 5
   end
 end
 
