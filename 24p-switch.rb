@@ -21,8 +21,8 @@ def influx(valuein, valueout, ifname, measurename)
 
   influxdb.write_point(name, datain)
   influxdb.write_point(name, dataout)
-  puts datain
-  puts dataout
+  #puts datain
+  #puts dataout
 end
 
 def interfaces
