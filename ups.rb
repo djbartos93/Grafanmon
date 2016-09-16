@@ -111,11 +111,18 @@ def upstemp(host, name)
 end
 
 
-upsruntime("172.16.0.59" , "UPS-01")
-upsinvoltage("172.16.0.59" , "UPS-01")
-upsoutvoltage("172.16.0.59" , "UPS-01")
-upsload("172.16.0.59" , "UPS-01")
-upscurrent("172.16.0.59" , "UPS-01")
-upslasttestresult("172.16.0.59" , "UPS-01")
-upslasttestdate("172.16.0.59" , "UPS-01")
-upstemp("172.16.0.59" , "UPS-01")
+def measure
+  loop do
+    upsruntime("172.16.0.59" , "UPS-01")
+    upsinvoltage("172.16.0.59" , "UPS-01")
+    upsoutvoltage("172.16.0.59" , "UPS-01")
+    upsload("172.16.0.59" , "UPS-01")
+    upscurrent("172.16.0.59" , "UPS-01")
+    upslasttestresult("172.16.0.59" , "UPS-01")
+    upslasttestdate("172.16.0.59" , "UPS-01")
+    upstemp("172.16.0.59" , "UPS-01")
+    sleep 30
+  end
+end
+
+measure
