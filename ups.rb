@@ -81,7 +81,7 @@ def upsload(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.4.2.3.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx(vb.value.to_i, "outvolt", name)
+          influx(vb.value.to_i, "load", name)
         end
     end
 end
