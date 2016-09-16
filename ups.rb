@@ -33,7 +33,7 @@ def influxresult(value, statusname, measurename)
   influxdb = InfluxDB::Client.new  database: database, host: host
   name = measurename
   data = {
-    values: { value: value },
+    values: { result: value },
     tags:   { test: statusname } # tags are optional
   }
 
@@ -48,7 +48,7 @@ def upsruntime(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.2.2.3.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx(vb.value.to_i, "runtime", name)
+          influxresult(vb.value.to_s, "runtime", name)
         end
     end
 end
@@ -108,7 +108,7 @@ def upslasttestresult(host, name)
           else
             output = "FAIL!"
           end
-          influx("#{output.to_s}", "test-result", name)
+          influxresult(output, "test-result", name)
         end
     end
 end
@@ -119,7 +119,7 @@ def upslasttestdate(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.7.2.4.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "test-date", name)
+          influxresult("#{vb.value.to_s}", "test-date", name)
         end
     end
 end
@@ -130,7 +130,7 @@ def upstemp(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.2.2.2.0"])
       response.each_varbind do |vb|
           puts "#{vb.value}".to_i
-          returns = vb.value.to_s
+          returns = vb.value.to_i
           influx(returns, "tempc", name)
         end
     end
@@ -144,8 +144,8 @@ def measure
     upsoutvoltage("172.16.0.59" , "UPS-1")
     upsload("172.16.0.59" , "UPS-1")
     upscurrent("172.16.0.59" , "UPS-1")
-    upslasttestresult("172.16.0.59" , "UPS-1-TESTS")
-    upslasttestdate("172.16.0.59" , "UPS-1-TESTS")
+    upslasttestresult("172.16.0.59", "UPS-1")
+    upslasttestdate("172.16.0.59", "UPS-1")
     upstemp("172.16.0.59" , "UPS-1")
     sleep 30
   end
