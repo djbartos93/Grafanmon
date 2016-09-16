@@ -82,8 +82,13 @@ def upslasttestresult(host, name)
   SNMP::Manager.open(:host => '172.16.0.59') do |manager|
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.7.2.3.0"])
       response.each_varbind do |vb|
-          puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "test-result", name)
+          input = "#{vb.value.to_s}"
+          if input == "1"
+            output = "Pass"
+          else
+            output = "FAIL!"
+          end
+          influx(output, "test-result", name)
         end
     end
 end
