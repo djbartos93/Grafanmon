@@ -28,7 +28,7 @@ def upsruntime(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.2.2.3.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "runtime", name)
+          influx(vb.value.to_i, "runtime", name)
         end
     end
 end
@@ -39,7 +39,7 @@ def upsinvoltage(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.3.2.1.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "linevolt", name)
+          influx(vb.value.to_i, "linevolt", name)
         end
     end
 end
@@ -50,7 +50,7 @@ def upsoutvoltage(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.4.2.1.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "linevolt", name)
+          influx(vb.value.to_i, "linevolt", name)
         end
     end
 end
@@ -61,7 +61,7 @@ def upsload(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.4.2.3.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "outvolt", name)
+          influx("#{vb.value.to_i}", "outvolt", name)
         end
     end
 end
@@ -72,7 +72,7 @@ def upscurrent(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.4.2.4.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "current", name)
+          influx(vb.value.to_i, "current", name)
         end
     end
 end
@@ -82,7 +82,7 @@ def upslasttestresult(host, name)
   SNMP::Manager.open(:host => '172.16.0.59') do |manager|
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.7.2.3.0"])
       response.each_varbind do |vb|
-          input = "#{vb.value.to_s}"
+          input = "#{vb.value.to_i}"
           if input == "1"
             output = "Pass"
           else
@@ -99,7 +99,7 @@ def upslasttestdate(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.7.2.4.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "test-date", name)
+          influx(vb.value.to_i, "test-date", name)
         end
     end
 end
@@ -109,8 +109,9 @@ def upstemp(host, name)
   SNMP::Manager.open(:host => host) do |manager|
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.2.2.2.0"])
       response.each_varbind do |vb|
-          puts "#{vb.value.to_s}"
-          influx("#{vb.value.to_s}", "tempc", name)
+          puts "#{vb.value}".to_i
+          returns = "#{vb.value}".to_i
+          influx(returns, "tempc", name)
         end
     end
 end
