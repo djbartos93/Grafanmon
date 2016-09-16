@@ -147,6 +147,16 @@ def measure
     upslasttestresult("172.16.0.59", "UPS-1")
     upslasttestdate("172.16.0.59", "UPS-1")
     upstemp("172.16.0.59" , "UPS-1")
+
+
+    upsruntime("172.16.0.60" , "UPS-2")
+    upsinvoltage("172.16.0.60" , "UPS-2")
+    upsoutvoltage("172.16.0.60" , "UPS-2")
+    upsload("172.16.0.60" , "UPS-2")
+    upscurrent("172.16.0.60" , "UPS-2")
+    upslasttestresult("172.16.0.60", "UPS-2")
+    upslasttestdate("172.16.0.60", "UPS-2")
+    upstemp("172.16.0.59" , "UPS-2")
     sleep 30
   end
 end
