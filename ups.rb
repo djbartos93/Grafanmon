@@ -99,7 +99,7 @@ def upslasttestdate(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.7.2.4.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influx(vb.value.to_i, "test-date", name)
+          influx(vb.value.to_s, "test-date", name)
         end
     end
 end
