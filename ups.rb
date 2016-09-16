@@ -33,8 +33,8 @@ def influxresult(value, statusname, measurename)
   influxdb = InfluxDB::Client.new  database: database, host: host
   name = measurename
   data = {
-    values: { result: value },
-    tags:   { stat: statusname } # tags are optional
+    values: { value: value },
+    tags:   { test: statusname } # tags are optional
   }
 
   influxdb.write_point(name, data)
@@ -108,7 +108,7 @@ def upslasttestresult(host, name)
           else
             output = "FAIL!"
           end
-          influxresult(output, "test-result", name)
+          influx("#{output.to_s}", "test-result", name)
         end
     end
 end
@@ -119,7 +119,7 @@ def upslasttestdate(host, name)
       response = manager.get(["1.3.6.1.4.1.318.1.1.1.7.2.4.0"])
       response.each_varbind do |vb|
           puts "#{vb.value.to_s}"
-          influxresult(vb.value.to_s, "test-date", name)
+          influx("#{vb.value.to_s}", "test-date", name)
         end
     end
 end
@@ -144,8 +144,8 @@ def measure
     upsoutvoltage("172.16.0.59" , "UPS-1")
     upsload("172.16.0.59" , "UPS-1")
     upscurrent("172.16.0.59" , "UPS-1")
-  #  upslasttestresult("172.16.0.59" , "UPS-1")
-  #  upslasttestdate("172.16.0.59" , "UPS-1")
+    upslasttestresult("172.16.0.59" , "UPS-1-TESTS")
+    upslasttestdate("172.16.0.59" , "UPS-1-TESTS")
     upstemp("172.16.0.59" , "UPS-1")
     sleep 30
   end
